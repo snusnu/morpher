@@ -4,11 +4,10 @@ require 'abstract_type'
 require 'concord'
 require 'anima'
 require 'ast'
+require 'procto'
 
 # Library namespace module
 module Morpher
-
-  EMPTY_ARRAY = [].freeze
 
   Undefined = Module.new.freeze
 
@@ -20,9 +19,9 @@ module Morpher
   #
   # @api private
   #
-  def self.evaluator(node)
-    node = Preprocessor.new(Emitter::REGISTRY).call(node)
-    Compiler.new(Evaluator::REGISTRY).call(node)
+  def self.compile(node)
+    node = Compiler::Preprocessor::DEFAULT.call(node)
+    Compiler::Evaluator::DEFAULT.call(node)
   end
 
   # Return evaluate block to produce an AST node
@@ -37,17 +36,16 @@ module Morpher
 
 end # Morpher
 
-require 'morpher/node'
 require 'morpher/node_helpers'
 require 'morpher/registry'
 require 'morpher/printer'
 require 'morpher/printer/mixin'
 require 'morpher/evaluator'
 require 'morpher/evaluator/nullary'
+require 'morpher/evaluator/nullary/parameterized'
 require 'morpher/evaluator/unary'
 require 'morpher/evaluator/binary'
 require 'morpher/evaluator/nary'
-require 'morpher/evaluator/parameterized'
 require 'morpher/evaluator/transformer'
 require 'morpher/evaluator/transformer/block'
 require 'morpher/evaluator/transformer/key'
@@ -66,10 +64,32 @@ require 'morpher/evaluator/predicate/primitive'
 require 'morpher/evaluator/predicate/negation'
 require 'morpher/evaluator/predicate/tautology'
 require 'morpher/evaluator/predicate/contradiction'
-require 'morpher/evaluator/predicate/or'
-require 'morpher/evaluator/predicate/and'
+require 'morpher/evaluator/predicate/boolean'
 require 'morpher/evaluation'
 require 'morpher/evaluation'
 require 'morpher/type_lookup'
 require 'morpher/compiler'
-require 'morpher/preprocessor'
+require 'morpher/compiler/error'
+require 'morpher/compiler/emitter'
+require 'morpher/compiler/evaluator'
+require 'morpher/compiler/evaluator/emitter'
+require 'morpher/compiler/preprocessor'
+require 'morpher/compiler/preprocessor/emitter'
+require 'morpher/compiler/preprocessor/emitter/noop'
+require 'morpher/compiler/preprocessor/emitter/key'
+
+module Morpher
+  class Compiler
+
+    class Preprocessor
+      # Default preprocessor compiler
+      DEFAULT = new(Emitter::REGISTRY.freeze)
+    end # Preprocessor
+
+    class Evaluator
+      # Default evaluator compiler
+      DEFAULT = new(Morpher::Evaluator::REGISTRY, Emitter::REGISTRY.freeze)
+    end # Evaluator
+
+  end # Compiler
+end # Morpher

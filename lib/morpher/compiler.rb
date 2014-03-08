@@ -2,134 +2,17 @@
 
 module Morpher
 
-  # The AST to evaluator tree compiler
+  # Abstract compiler base class
   class Compiler
-    include Concord.new(:registry)
+    include AbstractType
 
-    # Error raised when node children have incorrect amount
-    class NodeChildrenError < RuntimeError
-      include Concord.new(:node, :expected_amount)
-
-      # Return exception message
-      #
-      # @return [String]
-      #
-      # @api private
-      #
-      def message
-        "Expected #{expected_amount} #{_children} for #{type}, got #{actual_amount}: #{children}"
-      end
-
-      private
-
-      # Return inspected type
-      #
-      # @return [String]
-      #
-      # @api private
-      #
-      def type
-        node.type.inspect
-      end
-
-      # Return actual amount of children
-      #
-      # @return [String]
-      #
-      # @api private
-      #
-      def actual_amount
-        children.length
-      end
-
-      # Return children
-      #
-      # @return [Array]
-      #
-      # @api private
-      #
-      def children
-        node.children
-      end
-
-      # Return user firendly children message
-      #
-      # @return [String]
-      #
-      # @api private
-      #
-      def _children
-        expected_amount == 1 ? 'child' : 'children'
-      end
-
-    end # NodeChildrenError
-
-    # Assert number of child nodes
-    #
-    # @param [Morpher::Node] nodes
-    #
-    # @return [self]
-    #   if assertion is fullfilled
-    #
-    # @raise [NodeError]
-    #   otherwise
-    #
-    # @api private
-    #
-    def self.assert_child_nodes(node, expected_amount)
-      actual_amount = node.children.length
-      unless actual_amount == expected_amount
-        puts node.type.inspect
-        raise NodeChildrenError.new(node, expected_amount)
-      end
-    end
-
-    # Error raised on compiling unknown nodes
-    class UnknownNodeError < RuntimeError
-      include Concord.new(:type)
-
-      # Return exception error message
-      #
-      # @return [String]
-      #
-      # @api private
-      #
-      def message
-        "Node type: #{type.inspect} is unknown"
-      end
-
-    end # UnknownNodeError
-
-    # Return evaluator tree for node
+    # Call compiler
     #
     # @param [Node] node
     #
-    # @return [Evalautor]
+    # @return [Object]
     #
-    # @api private
-    #
-    def call(node)
-      lookup(node).build(self, node)
-    end
-
-  private
-
-    # Lookup evaluator builder
-    #
-    # @return [#build]
-    #   if found
-    #
-    # @raise UnknownNodeTypeError
-    #   otherwise
-    #
-    # @api private
-    #
-    def lookup(node)
-      type = node.type
-      registry.fetch(type) do
-        raise UnknownNodeError, type
-      end
-    end
+    abstract_method :call
 
   end # Compiler
 end # Morpher

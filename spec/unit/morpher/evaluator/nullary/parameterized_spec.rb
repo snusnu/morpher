@@ -2,12 +2,12 @@
 
 require 'spec_helper'
 
-describe Morpher::Evaluator::Parameterized do
+describe Morpher::Evaluator::Nullary::Parameterized do
 
   describe '.include' do
     let(:object) do
       Class.new(Morpher::Evaluator) do
-        include Morpher::Evaluator::Parameterized
+        include Morpher::Evaluator::Nullary::Parameterized
 
         def self.name
           'Foo'
@@ -24,10 +24,6 @@ describe Morpher::Evaluator::Parameterized do
         Foo
           param: "foo"
       TEXT
-    end
-
-    it 'sets up .build' do
-      expect(object.build(Morpher::Compiler.new(Morpher::Evaluator::REGISTRY), s(:foo, 'foo'))).to eql(instance)
     end
   end
 end

@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 require 'morpher'
+
 extend Morpher::NodeHelpers
 
 class Address
@@ -14,23 +15,23 @@ end
 node = s(:block,
   s(:guard, s(:primitive, Hash)),
   s(:hash_transform,
-    s(:symbolize_key, 'street',
+    s(:key_symbolize, 'street',
       s(:guard, s(:primitive, String))
     )
   ),
   s(:anima_load, Address)
 )
 
-ADDRESS_EVALUATOR = Morpher.evaluator(node)
+ADDRESS_EVALUATOR = Morpher.compile(node)
 
 node = s(:block,
   s(:guard, s(:primitive, Hash)),
   s(:hash_transform,
-    s(:symbolize_key, 'address',
+    s(:key_symbolize, 'address',
       ADDRESS_EVALUATOR.node
     )
   ),
   s(:anima_load, Person)
 )
 
-PERSON_EVALUATOR = Morpher.evaluator(node)
+PERSON_EVALUATOR = Morpher.compile(node)
