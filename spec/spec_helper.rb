@@ -1,6 +1,5 @@
-require 'devtools/spec_helper'
+require 'backports'
 require 'morpher'
-require 'mutant' # for the node helpers
 
 # Monkeypatch to mutant all specs per mutation.
 #
@@ -31,6 +30,6 @@ RSpec.configure do |config|
   config.include(StripHelper)
   config.include(Morpher::NodeHelpers)
   config.expect_with :rspec do |rspec|
-    rspec.syntax = %i[expect should]
+    rspec.syntax = [:expect, :should]
   end
 end

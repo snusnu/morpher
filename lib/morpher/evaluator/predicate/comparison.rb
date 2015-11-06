@@ -37,11 +37,11 @@ module Morpher
           right_evaluation = right.evaluation(input)
 
           Evaluation::Binary.success(
-            evaluator: self,
-            input: input,
-            output: apply(left_evaluation.output, right_evaluation.output),
-            left_evaluation: left_evaluation,
-            right_evaluation: right_evaluation
+            :evaluator        => self,
+            :input            => input,
+            :output           => apply(left_evaluation.output, right_evaluation.output),
+            :left_evaluation  => left_evaluation,
+            :right_evaluation => right_evaluation
           )
         end
 
@@ -63,7 +63,11 @@ module Morpher
       class NEQ < Comparison
         register :neq
 
-        OPERATOR = :!=
+        private
+
+        def apply(left, right)
+          left != right
+        end
       end # NEQ
 
       # Binary "greater than" evaluator

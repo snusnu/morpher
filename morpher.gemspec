@@ -14,8 +14,6 @@ Gem::Specification.new do |gem|
   gem.extra_rdoc_files = %w[TODO LICENSE]
   gem.license          = 'MIT'
 
-  gem.required_ruby_version = ['>= 2.1']
-
   gem.add_runtime_dependency('abstract_type', '~> 0.0.7')
   gem.add_runtime_dependency('adamantium',    '~> 0.2.0')
   gem.add_runtime_dependency('anima',         '~> 0.3.0')

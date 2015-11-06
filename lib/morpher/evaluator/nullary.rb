@@ -46,10 +46,10 @@ module Morpher
         #
         def evaluation_error(input)
           Evaluation::Nullary.new(
-            evaluator: self,
-            input:     input,
-            output:    Undefined,
-            success:   false
+            :evaluator => self,
+            :input     => input,
+            :output    => Undefined,
+            :success   => false
           )
         end
 
@@ -64,10 +64,10 @@ module Morpher
         #
         def evaluation_success(input, output)
           Evaluation::Nullary.new(
-            evaluator: self,
-            input:     input,
-            output:    output,
-            success:   true
+            :evaluator => self,
+            :input     => input,
+            :output    => output,
+            :success   => true
           )
         end
 

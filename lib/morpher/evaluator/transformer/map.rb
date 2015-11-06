@@ -58,10 +58,10 @@ module Morpher
           end
 
           Evaluation::Nary.success(
-            evaluator:   self,
-            input:       input,
-            output:      evaluations.map(&:output),
-            evaluations: evaluations
+            :evaluator   => self,
+            :input       => input,
+            :output      => evaluations.map(&:output),
+            :evaluations => evaluations
           )
         end
 
@@ -88,9 +88,9 @@ module Morpher
         #
         def evaluation_error(input, evaluations)
           Evaluation::Nary.error(
-            evaluator: self,
-            input:     input,
-            evaluations: evaluations
+            :evaluator   => self,
+            :input       => input,
+            :evaluations => evaluations
           )
         end
 

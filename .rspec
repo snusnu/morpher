@@ -1,4 +1,3 @@
 --color
---warnings
 --order random
 --require spec_helper

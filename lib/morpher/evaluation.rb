@@ -24,12 +24,12 @@ module Morpher
     public :success?
 
     ERROR_DEFAULTS = IceNine.deep_freeze(
-      output: Undefined,
-      success: false
+      :output  => Undefined,
+      :success => false
     )
 
     SUCCESS_DEFAULTS = IceNine.deep_freeze(
-      success: true
+      :success => true
     )
 
     # Return error instance

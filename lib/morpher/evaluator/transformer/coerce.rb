@@ -67,7 +67,7 @@ module Morpher
           # @api private
           #
           def invoke(input)
-            Integer(input, param)
+            Integer(input)#, param)
           end
 
         end # ParseInt

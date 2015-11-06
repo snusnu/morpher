@@ -51,10 +51,10 @@ module Morpher
         #
         def evaluation_success(input, operand_evaluation, output)
           Evaluation::Unary.success(
-            evaluator:          self,
-            input:              input,
-            operand_evaluation: operand_evaluation,
-            output:             output
+            :evaluator          => self,
+            :input              => input,
+            :operand_evaluation => operand_evaluation,
+            :output             => output
           )
         end
 
@@ -68,9 +68,9 @@ module Morpher
         #
         def evaluation_error(input, operand_evaluation)
           Evaluation::Unary.error(
-            evaluator:          self,
-            input:              input,
-            operand_evaluation: operand_evaluation
+            :evaluator          => self,
+            :input              => input,
+            :operand_evaluation => operand_evaluation
           )
         end
       end # InstanceMethods

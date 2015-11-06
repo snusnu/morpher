@@ -1,22 +1,13 @@
-require 'devtools'
-Devtools.init_rake_tasks
+# encoding: utf-8
 
-Rake.application.load_imports
-task('metrics:mutant').clear
-namespace :metrics do
-  task mutant: :coverage do
-    success = Kernel.system(*%w[
-      bundle exec mutant
-      --zombie
-      --use rspec
-      --include lib
-      --require morpher
-      --since HEAD~1
-      --
-      Morpher*
-    ]) or fail 'Mutant task is not successful'
-  end
-end
+require 'bundler'
+require 'rspec/core/rake_task'
+
+Bundler::GemHelper.install_tasks
+RSpec::Core::RakeTask.new(:spec)
+
+task :test    => :spec
+task :default => :spec
 
 # NOTICE: This uses private interface of morpher that can change at any time.
 # Its just a placeholder for a better reflection technique!!!

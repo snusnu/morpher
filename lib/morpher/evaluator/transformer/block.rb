@@ -69,10 +69,10 @@ module Morpher
           end
 
           Evaluation::Nary.success(
-            evaluator:   self,
-            input:       input,
-            output:      state,
-            evaluations: evaluations
+            :evaluator   => self,
+            :input       => input,
+            :output      => state,
+            :evaluations => evaluations
           )
         end
       end # Block
